@@ -1,0 +1,282 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ProjectFlow design system ("Warm Orange").
+ * Source of truth: docs/design/auth/*.dc.html + reference screenshots.
+ * Components use ONLY these tokens, never raw hex values. See docs/design/README.md.
+ */
+
+@theme inline {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-heading: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+
+  /* shadcn names (existing ui/* components read these) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ProjectFlow tokens */
+  --color-canvas: var(--canvas);
+  --color-subtle: var(--subtle);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-soft-strong: var(--brand-soft-strong);
+  --color-brand-soft-foreground: var(--brand-soft-foreground);
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+  --color-critical: var(--critical);
+  --color-critical-soft: var(--critical-soft);
+  --color-slack: var(--slack);
+  --color-slack-border: var(--slack-border);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-grid: var(--grid);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-card: var(--elevation-card);
+  --shadow-pop: var(--elevation-pop);
+  --shadow-pill: var(--elevation-pill);
+}
+
+:root {
+  --radius: 0.625rem; /* 10px: inputs, buttons */
+
+  /* Surfaces */
+  --canvas: #f4f2ef; /* app background, sidebar, auth visual */
+  --background: #ffffff; /* content panel */
+  --subtle: #f8f7f5; /* inputs, board columns, info boxes */
+  --card: #ffffff;
+  --card-foreground: #1f1d1a;
+  --popover: #ffffff;
+  --popover-foreground: #1f1d1a;
+
+  /* Text and lines */
+  --foreground: #1f1d1a;
+  --muted: #f4f2ef;
+  --muted-foreground: #6b6660;
+  --border: #ece9e4; /* hairlines */
+  --input: #928b83; /* form control borders, 3:1 contrast */
+  --grid: #efece8; /* timeline grid */
+
+  /* Brand */
+  --brand: #f26b1d; /* logo, focus ring, active tab, today line */
+  --primary: #c9480b; /* primary buttons (AA with white) */
+  --primary-foreground: #ffffff;
+  --link: #c2410c;
+  --link-hover: #9a3412;
+  --brand-soft: #fff1e8;
+  --brand-soft-strong: #ffd9c2;
+  --brand-soft-foreground: #9a3412;
+
+  /* Status */
+  --critical: #b42318; /* critical path, errors, overload */
+  --critical-soft: #feeceb;
+  --slack: #d6e8ff;
+  --slack-border: #7fa3d6;
+  --success: #166f43;
+  --success-soft: #e7f6ec;
+  --warning: #b54708;
+  --warning-soft: #fef0c7;
+  --info: #4f46e5; /* "In progress" */
+  --info-soft: #eef0ff;
+
+  /* Card gradient tints (task cards, stat tiles) */
+  --tint-violet: #ece6ff;
+  --tint-blue: #dcebff;
+  --tint-peach: #ffe2cf;
+  --tint-pink: #ffdfec;
+  --tint-green: #dcf5e6;
+
+  /* shadcn mapping */
+  --secondary: #f4f2ef;
+  --secondary-foreground: #1f1d1a;
+  --accent: #fff1e8;
+  --accent-foreground: #9a3412;
+  --destructive: #b42318;
+  --ring: #f26b1d;
+  --chart-1: #f26b1d;
+  --chart-2: #4f46e5;
+  --chart-3: #166f43;
+  --chart-4: #b42318;
+  --chart-5: #928b83;
+  --sidebar: #f4f2ef;
+  --sidebar-foreground: #6b6660;
+  --sidebar-primary: #c9480b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ffffff;
+  --sidebar-accent-foreground: #1f1d1a;
+  --sidebar-border: #ece9e4;
+  --sidebar-ring: #f26b1d;
+
+  /* Elevation */
+  --elevation-card: 0 1px 2px rgb(31 29 26 / 5%), 0 12px 32px rgb(31 29 26 / 8%);
+  --elevation-pop: 0 1px 2px rgb(31 29 26 / 5%), 0 12px 28px rgb(31 29 26 / 10%);
+  --elevation-pill: 0 1px 2px rgb(31 29 26 / 6%);
+
+  color-scheme: light;
+}
+
+/* Warm dark theme: same roles, derived from the light palette. */
+.dark {
+  --canvas: #141210;
+  --background: #1c1916;
+  --subtle: #24201c;
+  --card: #221e1a;
+  --card-foreground: #f4f2ef;
+  --popover: #24201c;
+  --popover-foreground: #f4f2ef;
+
+  --foreground: #f4f2ef;
+  --muted: #24201c;
+  --muted-foreground: #a39c94;
+  --border: #322d28;
+  --input: #6b6660;
+  --grid: #2a2622;
+
+  --brand: #f26b1d;
+  --primary: #c9480b;
+  --primary-foreground: #ffffff;
+  --link: #fb8b4e;
+  --link-hover: #fdba8c;
+  --brand-soft: #3a2416;
+  --brand-soft-strong: #5a3218;
+  --brand-soft-foreground: #fdba8c;
+
+  --critical: #f97066;
+  --critical-soft: #3b1a17;
+  --slack: #1e3350;
+  --slack-border: #5b7fb3;
+  --success: #4fc98a;
+  --success-soft: #12301f;
+  --warning: #fdb022;
+  --warning-soft: #3a2a0e;
+  --info: #a5b4fc;
+  --info-soft: #23264a;
+
+  --tint-violet: rgb(139 92 246 / 14%);
+  --tint-blue: rgb(59 130 246 / 14%);
+  --tint-peach: rgb(242 107 29 / 16%);
+  --tint-pink: rgb(236 72 153 / 13%);
+  --tint-green: rgb(34 197 94 / 12%);
+
+  --secondary: #24201c;
+  --secondary-foreground: #f4f2ef;
+  --accent: #3a2416;
+  --accent-foreground: #fdba8c;
+  --destructive: #f97066;
+  --ring: #f26b1d;
+  --chart-1: #f26b1d;
+  --chart-2: #a5b4fc;
+  --chart-3: #4fc98a;
+  --chart-4: #f97066;
+  --chart-5: #a39c94;
+  --sidebar: #141210;
+  --sidebar-foreground: #a39c94;
+  --sidebar-primary: #c9480b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #24201c;
+  --sidebar-accent-foreground: #f4f2ef;
+  --sidebar-border: #322d28;
+  --sidebar-ring: #f26b1d;
+
+  --elevation-card: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 32px rgb(0 0 0 / 35%);
+  --elevation-pop: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 28px rgb(0 0 0 / 40%);
+  --elevation-pill: 0 1px 2px rgb(0 0 0 / 40%);
+
+  color-scheme: dark;
+}
+
+/* Soft corner glow used on task cards and stat tiles. Pick a tint-* class. */
+@utility card-glow {
+  background-image: radial-gradient(
+    110% 120% at 100% 100%,
+    var(--glow, transparent) 0%,
+    transparent 62%
+  );
+}
+@utility glow-violet {
+  --glow: var(--tint-violet);
+}
+@utility glow-blue {
+  --glow: var(--tint-blue);
+}
+@utility glow-peach {
+  --glow: var(--tint-peach);
+}
+@utility glow-pink {
+  --glow: var(--tint-pink);
+}
+@utility glow-green {
+  --glow: var(--tint-green);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-canvas text-foreground;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  ::placeholder {
+    color: var(--muted-foreground);
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    &:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+  }
+}
